@@ -2,8 +2,10 @@ import React, { createContext, useEffect, useMemo, useReducer } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import EncryptedStorage from 'react-native-encrypted-storage'
-import SignIn from './screens/auth/sign-in';
-import Home from './screens/home';
+import SignIn from './screens/auth/sign-in'
+import Home from './screens/home'
+import AuthHome from './screens/auth'
+import SignUp from './screens/auth/sign-up'
 
 
 const Stack = createNativeStackNavigator();
@@ -87,11 +89,16 @@ const App = () => {
   return (
     <NavigationContainer>
       <AuthContext.Provider value={authContext}>
-        <Stack.Navigator>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        >
           {state.userToken == null ? (
             <>
-
+              <Stack.Screen name="auth-home" component={AuthHome} />
               <Stack.Screen name="sign-in" component={SignIn} />
+              <Stack.Screen name="sign-up" component={SignUp} />
               {/* <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
             </>
