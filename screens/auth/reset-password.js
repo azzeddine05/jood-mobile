@@ -1,30 +1,22 @@
 import React, { useState } from 'react'
-import { Button, Text, View, StyleSheet, TextInput, ScrollView } from 'react-native'
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { AuthContext } from '../../App'
 import GoBack from '../../components/go-back'
 import { theme } from '../../styles/theme'
 import globalStyles from '../../styles/styles'
 import PrimaryButton from '../../components/primary-button'
 
-const SignUp = ({ navigation }) => {
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    email_confirm: '',
-    password_confirm: ''
-  })
+
+const ResetPassword = ({ navigation }) => {
+  const [sent, setSent] = useState(false)
+  const [email, setEmail] = useState('')
 
   const goBack = () => {
     navigation.goBack()
   }
 
-  const handleChange = (text, name) => {
-    setUser(prevState => {
-      return {
-        ...prevState,
-        [name]: text
-      }
-    })
+  const handleChange = (text) => {
+    setEmail(text)
   }
 
   const handleBlur = (e) => {
@@ -38,60 +30,41 @@ const SignUp = ({ navigation }) => {
   return (
     <AuthContext.Consumer>
       {
-        ({ signUp }) => (
+        ({ signIn }) => (
           <View style={styles.container}>
             <GoBack onPress={goBack} />
             <ScrollView contentContainerStyle={styles.signUpContainer}>
               <View>
-                <Text style={styles.title}>Créer un compte</Text>
-                <Text style={styles.description}>
-                  Lorem ipsum dolor sit amet, consectetur
-                  adipiscing eliturpis non ante mattis .
-                </Text>
+                <Text style={styles.title}>Récupérer le mot de passe</Text>
+                <Text style={styles.description}>Entrez votre adresse e-mail complète et appuyer sur le bouton Envoyer.</Text>
                 <TextInput
                   style={{ ...globalStyles.input }}
                   placeholder="Email"
                   placeholderTextColor='#a193a2'
-                  onChangeText={(e) => handleChange(e, 'email')}
+                  onChangeText={(e) => handleChange(e)}
                   onBlur={handleBlur}
                   onFocus={handleFocued}
-                  value={user.email}
+                  value={email}
                   textContentType="emailAddress"
                 />
-                <TextInput
-                  style={{ ...globalStyles.input }}
-                  placeholder="Confirmation email"
-                  placeholderTextColor='#a193a2'
-                  onChangeText={(e) => handleChange(e, 'email_confirm')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
-                  value={user.email_confirm}
-                  textContentType="emailAddress"
-                />
-                <TextInput
-                  style={{ ...globalStyles.input }}
-                  placeholder="Mot de passe"
-                  placeholderTextColor='#a193a2'
-                  onChangeText={(e) => handleChange(e, 'password')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
-                  value={user.password}
-                  secureTextEntry
-                />
-                <TextInput
-                  style={{ ...globalStyles.input }}
-                  placeholder="Confirmation mot de passe"
-                  placeholderTextColor='#a193a2'
-                  onChangeText={(e) => handleChange(e, 'password_confirm')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
-                  value={user.password_confirm}
-                  secureTextEntry
-                />
-                <PrimaryButton onPress={() => signUp({ token: 'helo-token' })} text="S'inscrire" />
+              </View>
+
+              {sent &&
+                <TouchableOpacity onPress={() => navigation.navigate('sign-in')}>
+                  <Text style={{ padding: 10, textAlign: 'center' }}>
+                    Nous vous avons envoyé un e-mail pour modifier votre mot de passe du compte concerné. 
+                    <Text style={{fontWeight: 'bold'}}>Reconnexion</Text>
+                  </Text>
+                </TouchableOpacity>
+              }
+
+              <View>
               </View>
               <View>
-                {/* social logins */}
+                <PrimaryButton onPress={() => {
+                  // send password reset request then show message
+                  setSent(true)
+                }} text="Envoyer" />
               </View>
             </ScrollView>
           </View>
@@ -100,7 +73,6 @@ const SignUp = ({ navigation }) => {
     </AuthContext.Consumer>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -177,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp
+export default ResetPassword

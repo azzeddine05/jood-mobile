@@ -6,6 +6,7 @@ import SignIn from './screens/auth/sign-in'
 import Home from './screens/home'
 import AuthHome from './screens/auth'
 import SignUp from './screens/auth/sign-up'
+import ResetPassword from './screens/auth/reset-password'
 
 
 const Stack = createNativeStackNavigator();
@@ -70,11 +71,12 @@ const App = () => {
         // We will also need to handle errors if sign in failed
         // After getting token, we need to persist the token using `SecureStore`
         // In the example, we'll use a dummy token
-        console.log(data)
+        console.log('signin: ', data)
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
       },
       signOut: () => dispatch({ type: 'SIGN_OUT' }),
       signUp: async data => {
+        console.log('signup: ', data)
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `SecureStore`
@@ -99,6 +101,7 @@ const App = () => {
               <Stack.Screen name="auth-home" component={AuthHome} />
               <Stack.Screen name="sign-in" component={SignIn} />
               <Stack.Screen name="sign-up" component={SignUp} />
+              <Stack.Screen name="reset-password" component={ResetPassword} />
               {/* <Stack.Screen name="SignUp" component={SignUpScreen} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} /> */}
             </>

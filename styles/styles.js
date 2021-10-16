@@ -6,12 +6,12 @@ const globalStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.color.primaryDark1,
     margin: 0,
+    marginBottom: 10,
     padding: 13,
     paddingHorizontal :25 ,
     fontSize: 13,
-    borderRadius: 15,
+    borderRadius: 30,
     fontFamily : 'Montserrat-Regular',
-    
   },
   errorText: {
     color: 'crimson',
