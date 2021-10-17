@@ -8,6 +8,7 @@ import AuthHome from './screens/auth'
 import SignUp from './screens/auth/sign-up'
 import ResetPassword from './screens/auth/reset-password'
 import EditProfile from './screens/profile/edit'
+import AccepteCharte from './screens/profile/accepte-charte'
 
 
 const Stack = createNativeStackNavigator();
@@ -113,7 +114,9 @@ const App = () => {
             </>
           ) : (
             <>
-              <Stack.Screen name="home" component={EditProfile} />
+              {/* <Stack.Screen name="home" component={Home} /> */}
+              {/* <Stack.Screen name="home" component={EditProfile} /> */}
+              <Stack.Screen name="home" component={AccepteCharte} />
               {/* <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} /> */}
             </>
