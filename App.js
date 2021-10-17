@@ -7,6 +7,7 @@ import Home from './screens/home'
 import AuthHome from './screens/auth'
 import SignUp from './screens/auth/sign-up'
 import ResetPassword from './screens/auth/reset-password'
+import EditProfile from './screens/profile/edit'
 
 
 const Stack = createNativeStackNavigator();
@@ -84,6 +85,11 @@ const App = () => {
 
         dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
       },
+      editProfile: async data => {
+        console.log(data)
+        // here call the edit profile end point
+        // think to extract context in contexts folder
+      }
     }),
     []
   )
@@ -107,7 +113,7 @@ const App = () => {
             </>
           ) : (
             <>
-              <Stack.Screen name="home" component={Home} />
+              <Stack.Screen name="home" component={EditProfile} />
               {/* <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} /> */}
             </>
