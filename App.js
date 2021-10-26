@@ -114,9 +114,9 @@ const App = () => {
             </>
           ) : (
             <>
-              {/* <Stack.Screen name="home" component={Home} /> */}
+              <Stack.Screen name="home" component={Home} />
               {/* <Stack.Screen name="home" component={EditProfile} /> */}
-              <Stack.Screen name="home" component={AccepteCharte} />
+              {/* <Stack.Screen name="home" component={AccepteCharte} /> */}
               {/* <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Profile" component={ProfileScreen} /> */}
             </>
