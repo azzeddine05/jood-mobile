@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
-import { Button, Text, View, StyleSheet, TextInput, ScrollView } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
 import { AuthContext } from '../../App'
-import GoBack from '../../components/go-back'
 import { theme } from '../../styles/theme'
 import globalStyles from '../../styles/styles'
 import PrimaryButton from '../../components/primary-button'
+import Logo from '../../components/logo'
+import separator from '../../assets/separator.png'
+import google from '../../assets/google.png'
+import facebook from '../../assets/facebook.png'
+import SocialLoginButton from '../../components/social-login-button'
 
-const SignUp = ({ navigation }) => {
+
+const SignUp = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
-    email_confirm: '',
     password_confirm: ''
   })
-
-  const goBack = () => {
-    navigation.goBack()
-  }
 
   const handleChange = (text, name) => {
     setUser(prevState => {
@@ -27,72 +27,64 @@ const SignUp = ({ navigation }) => {
     })
   }
 
-  const handleBlur = (e) => {
-
-  }
-
-  const handleFocued = (e) => {
-
-  }
-
   return (
     <AuthContext.Consumer>
       {
         ({ signUp }) => (
           <View style={styles.container}>
-            <GoBack onPress={goBack} />
             <ScrollView contentContainerStyle={styles.signUpContainer}>
-              <View>
-                <Text style={styles.title}>Créer un compte</Text>
-                <Text style={styles.description}>
-                  Lorem ipsum dolor sit amet, consectetur
-                  adipiscing eliturpis non ante mattis .
-                </Text>
+              <Logo />
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.title}>Connexion</Text>
+                <Text style={styles.label}>Adresse mail</Text>
                 <TextInput
                   style={{ ...globalStyles.input }}
-                  placeholder="Email"
-                  placeholderTextColor='#a193a2'
                   onChangeText={(e) => handleChange(e, 'email')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
                   value={user.email}
                   textContentType="emailAddress"
                 />
+
+                <Text style={styles.label}>Mot de passe</Text>
                 <TextInput
                   style={{ ...globalStyles.input }}
-                  placeholder="Confirmation email"
-                  placeholderTextColor='#a193a2'
-                  onChangeText={(e) => handleChange(e, 'email_confirm')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
-                  value={user.email_confirm}
-                  textContentType="emailAddress"
-                />
-                <TextInput
-                  style={{ ...globalStyles.input }}
-                  placeholder="Mot de passe"
-                  placeholderTextColor='#a193a2'
                   onChangeText={(e) => handleChange(e, 'password')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
                   value={user.password}
                   secureTextEntry
                 />
+
+                <Text style={styles.label}>Conﬁrmation du mot de passe</Text>
                 <TextInput
                   style={{ ...globalStyles.input }}
-                  placeholder="Confirmation mot de passe"
-                  placeholderTextColor='#a193a2'
                   onChangeText={(e) => handleChange(e, 'password_confirm')}
-                  onBlur={handleBlur}
-                  onFocus={handleFocued}
                   value={user.password_confirm}
                   secureTextEntry
                 />
+
                 <PrimaryButton onPress={() => signUp({ token: 'helo-token' })} text="S'inscrire" />
               </View>
-              <View>
-                {/* social logins */}
+
+              <Image style={{ marginTop: 10 }} source={separator} />
+
+              <View style={styles.inputContainer}>
+                <SocialLoginButton text="Continuer avec google" onPress={() => console.log('google login')}>
+                  <Image source={google} />
+                </SocialLoginButton>
+                <SocialLoginButton text="Continuer avec facebook" onPress={() => console.log('facebook login')}>
+                  <Image source={facebook} />
+                </SocialLoginButton>
               </View>
+              {/* <View>
+                <TouchableOpacity
+                  style={{ paddingVertical: 15, textAlign: 'center' }}
+                  onPress={() => navigation.navigate('sign-up')}
+                >
+                  <Text style={{ color: theme.color.dark }}>Pas encore de compte ? <Text style={{ fontWeight: 'bold' }}>Inscrivez-vous !</Text></Text>
+                </TouchableOpacity> 
+                <TouchableOpacity onPress={() => navigation.navigate('reset-password')}>
+                  <Text style={{ color: theme.color.dark, paddingBottom: 10, textAlign: 'right' }}>Mot de passe oublié ?</Text>
+                </TouchableOpacity> 
+              </View>*/}
             </ScrollView>
           </View>
         )
@@ -101,47 +93,32 @@ const SignUp = ({ navigation }) => {
   )
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingVertical: 10,
-    paddingHorizontal: 25,
   },
   signUpContainer: {
     justifyContent: 'space-between',
-    alignItems: 'center'
-  },
-  goBackButton: {
-    flexDirection: 'row',
     alignItems: 'center',
   },
-  goBackButtonArrow: {
-    fontWeight: 'bold',
-    fontSize: 32,
-    color: theme.color.primary,
-    marginRight: 5,
-    bottom: 2
+  inputContainer: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 25,
   },
-  goBackButtonText: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    color: theme.color.primary
+  label: {
+    color: theme.color.dark,
+    padding: 8,
+    fontSize: 16,
   },
   title: {
-    color: theme.color.secondary,
+    color: theme.color.dark,
     fontWeight: 'bold',
-    fontSize: 21,
-    textAlign: 'center'
-  },
-  description: {
+    fontSize: 32,
     textAlign: 'center',
-    marginBottom: 10,
-  },
-  charity: {
-    width: 300,
-    height: 300
+    marginVertical: 10
   },
   authButtons: {
     flexDirection: 'row',

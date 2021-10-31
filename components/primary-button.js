@@ -12,15 +12,17 @@ const PrimaryButton = ({ text, onPress }) => {
 
 const styles = StyleSheet.create({
   primaryButton: {
-    backgroundColor: theme.color.primary,
-    borderRadius: 30,
+    backgroundColor: theme.color.green,
+    borderRadius: 20,
     paddingVertical: 15,
     paddingHorizontal: 30,
+    marginTop: 15,
   },
   text: {
-    color: theme.color.secondary,
+    color: theme.color.light,
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 17,
   },
 })
 
