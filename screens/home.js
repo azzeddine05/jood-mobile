@@ -1,32 +1,33 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import Video from 'react-native-video'
+import { Button, StyleSheet, Text, View } from 'react-native'
 import { AuthContext } from '../App'
-import presentaion from '../assets/presentation.mp4'
+// import Video from 'react-native-video'
+// import presentaion from '../assets/presentation.mp4'
 
 const Home = () => {
-  const onBuffer = () => {
-    console.log('on buffer')
-  }
+  // const onBuffer = () => {
+  //   console.log('on buffer')
+  // }
 
-  const onVideoError = (e) => {
-    console.log('on onVideoError', e)
-  }
+  // const onVideoError = (e) => {
+  //   console.log('on onVideoError', e)
+  // }
 
   return (
     <AuthContext.Consumer>
       {
         ({ signOut }) => (
           <>
-            <Text>presentaion</Text>
-            <Video
+            <Text style={{ textAlign: 'center', marginTop: 25 }}>Home Screen</Text>
+            <Button title="LOGOUT" onPress={signOut} />
+            {/* <Video
               source={presentaion}   // Can be a URL or a local file.
               controls
               fullscreen={false}
               onBuffer={onBuffer}
               onError={onVideoError}
               style={styles.backgroundVideo}
-            />
+            /> */}
           </>
         )
       }

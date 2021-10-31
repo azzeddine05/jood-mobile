@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const preprod = 'https://api.hotellom.com'
+const preprod = 'https://jood-api.herokuapp.com/api'
 
 const http = axios.create({
     baseURL: `${preprod}`,
