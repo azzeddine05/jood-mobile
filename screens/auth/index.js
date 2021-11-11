@@ -8,7 +8,7 @@ const AuthHome = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={logo} />
-      <Text style={styles.title}>
+      {/* <Text style={styles.title}>
         Lorem ipsum dolor sit amet,
         consectetur adipiscing elit.
       </Text>
@@ -17,7 +17,7 @@ const AuthHome = ({ navigation }) => {
         Lorem ipsum dolor sit amet, consectetur adipiscing
         elit. Nullam sollicitudin turpis non ante mattis
         blandit. Sed sed sodales metus. Praesent quam
-      </Text>
+      </Text> */}
       <View style={styles.authButtons}>
         <TouchableOpacity style={styles.signinButton} onPress={() => navigation.navigate('sign-in')}>
           <Text style={styles.signinButtonText}>Se connecter</Text>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   signinButton: {
-    backgroundColor: theme.color.primary,
+    backgroundColor: theme.color.green,
     borderRadius: 30,
     paddingVertical: 15,
     paddingHorizontal: 30,
@@ -67,14 +67,14 @@ const styles = StyleSheet.create({
     zIndex: 10
   },
   signinButtonText: {
-    color: theme.color.secondary,
+    color: theme.color.light,
     fontWeight: 'bold'
   },
   registerButton: {
     backgroundColor: '#fff',
     paddingVertical: 15,
     paddingHorizontal: 30,
-    borderColor: theme.color.secondary,
+    borderColor: theme.color.green,
     borderWidth: 3,
     borderTopRightRadius: 30,
     borderBottomRightRadius: 30,

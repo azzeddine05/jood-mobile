@@ -99,10 +99,6 @@ const App = () => {
                 <Stack.Screen name="sign-in" component={SignIn} />
                 <Stack.Screen name="sign-up" component={SignUp} />
                 <Stack.Screen name="reset-password" component={ResetPassword} />
-                {/* 
-                <Stack.Screen name="SignUp" component={SignUpScreen} />
-                <Stack.Screen name="ResetPassword" component={ResetPassword} /> 
-                */}
               </>
             ) : (
               <>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, StyleSheet, Text, View, _View } from 'react-native'
 import { AuthContext } from '../App'
 // import Video from 'react-native-video'
 // import presentaion from '../assets/presentation.mp4'
@@ -17,9 +17,10 @@ const Home = () => {
     <AuthContext.Consumer>
       {
         ({ signOut }) => (
-          <>
-            <Text style={{ textAlign: 'center', marginTop: 25 }}>Home Screen</Text>
-            <Button title="LOGOUT" onPress={signOut} />
+          <View style={{ flex: 1 }}>
+            <Text style={{ textAlign: 'center', marginTop: 50 }}>Profile Screen</Text>
+            <View style={{ marginTop: 'auto', marginBottom: 100, marginHorizontal: 20 }}><Button title="LOGOUT" onPress={signOut} /></View>
+
             {/* <Video
               source={presentaion}   // Can be a URL or a local file.
               controls
@@ -28,7 +29,7 @@ const Home = () => {
               onError={onVideoError}
               style={styles.backgroundVideo}
             /> */}
-          </>
+          </View>
         )
       }
     </AuthContext.Consumer>

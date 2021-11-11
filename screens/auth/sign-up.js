@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
 import { AuthContext } from '../../App'
 import { theme } from '../../styles/theme'
 import globalStyles from '../../styles/styles'
@@ -10,8 +10,25 @@ import google from '../../assets/google.png'
 import facebook from '../../assets/facebook.png'
 import SocialLoginButton from '../../components/social-login-button'
 import http from '../../utils/http'
-import { ROUTES } from '../../utils/urls'
+import { ROUTES, SOCIAL_CREDENTIELS } from '../../utils/constants'
 import Loading from '../../components/loading'
+import OAuthManager from 'react-native-social-login'
+
+
+
+const config = {
+  google: {
+    callback_url: SOCIAL_CREDENTIELS.GOOGLE.CALLBACK_URL,
+    client_id: SOCIAL_CREDENTIELS.GOOGLE.CLIENT_ID,
+    client_secret: SOCIAL_CREDENTIELS.GOOGLE.CLIENT_SECRET
+  },
+  facebook: {
+    client_id: SOCIAL_CREDENTIELS.FACEBOOK.APP_ID,
+    client_secret: SOCIAL_CREDENTIELS.FACEBOOK.APP_SECRET
+  }
+}
+const manager = new OAuthManager('jood')
+manager.configure(config)
 
 
 const SignUp = () => {
@@ -89,10 +106,91 @@ const SignUp = () => {
     return data
   }
 
+  const handleGoogleAuth = (signIn) => {
+    setLoading(true)
+
+    const data = {
+      success: false,
+      token: null
+    }
+
+    manager.authorize('google', { scopes: 'email' })
+      .then(respo => {
+        console.log(respo.response.credentials.accessToken)
+        if (respo.authorized) {
+          http.post(ROUTES.AUTH.LOGIN, { source: 'google', token: respo.response.credentials.accessToken })
+            .then(response => {
+              data.success = response.data.success
+              data.token = response.data.data.token
+
+              if (data.success) {
+                signIn({ token: data.token })
+              }
+
+              setLoading(false)
+            })
+            .catch(err => {
+              console.log(err)
+              setError('Erreur de connexion avec google [Server Error]')
+              setLoading(false)
+            })
+        } else {
+          setError('Non authorisé à se connecter avec google.')
+          setLoading(false)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+        setError('Problème de connexion avec google.')
+        setLoading(false)
+      })
+  }
+
+  const handleFacebookAuth = (signIn) => {
+    setLoading(true)
+
+    const data = {
+      success: false,
+      token: null
+    }
+
+    manager.authorize('facebook')
+      .then(respo => {
+        console.log(respo)
+        // if (respo.authorized) {
+        //   http.post(ROUTES.AUTH.LOGIN, { source: 'google', token: respo.response.credentials.accessToken })
+        //     .then(response => {
+        //       data.success = response.data.success
+        //       data.token = response.data.data.token
+
+        //       if (data.success) {
+        //         signIn({ token: data.token })
+        //       }
+
+        //       setLoading(false)
+        //     })
+        //     .catch(err => {
+        //       console.log(err)
+        //       setError('Erreur de connexion avec google [Server Error]')
+        //       setLoading(false)
+        //     })
+        // } else {
+        //   setError('Non authorisé à se connecter avec google.')
+        //   setLoading(false)
+        // }
+        setLoading(false)
+      })
+      .catch(err => {
+        console.log(err)
+        setError('Problème de connexion avec facebook.')
+        setLoading(false)
+      })
+  }
+
   return (
     <AuthContext.Consumer>
       {
-        ({ signUp }) => (
+        ({ signIn, signUp }) => (
           <View style={styles.container}>
             {
               loading ? <Loading /> :
@@ -147,10 +245,23 @@ const SignUp = () => {
                   <Image style={{ marginTop: 10 }} source={separator} />
 
                   <View style={styles.inputContainer}>
-                    <SocialLoginButton text="Continuer avec google" onPress={() => console.log('google login')}>
+                    <SocialLoginButton
+                      text="Continuer avec google"
+                      onPress={() => handleGoogleAuth(signIn)}
+                    >
                       <Image source={google} />
                     </SocialLoginButton>
-                    <SocialLoginButton text="Continuer avec facebook" onPress={() => console.log('facebook login')}>
+                    <SocialLoginButton
+                      text="Continuer avec facebook"
+                      onPress={() => {
+                        // handleFacebookAuth(signIn)
+                        ToastAndroid.showWithGravity(
+                          "Not Yet Ready !",
+                          ToastAndroid.SHORT,
+                          ToastAndroid.CENTER
+                        )
+                      }}
+                    >
                       <Image source={facebook} />
                     </SocialLoginButton>
                   </View>
